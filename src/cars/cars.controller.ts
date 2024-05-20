@@ -1,19 +1,23 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { CarsService } from './cars.service';
 
 @Controller('cars')
 export class CarsController {
 
-  private cars = ['Toyota', 'Nissan', 'Volswagen', 'Jeep', 'KIA']
+  constructor(
+    private readonly carsService : CarsService
+  ){
+
+  }
 
   @Get()
   getAllCars() {
-    return this.cars;
+    return this.carsService.findAll();
   }
 
   @Get(':id')
-  getCarByID(@Param('id') id){
+  getCarByID(@Param('id', ParseIntPipe) id: number){
     console.log({id});
-    return this.cars[id]
-    
+    return this.carsService.findOneByID(id)
   }
 }
