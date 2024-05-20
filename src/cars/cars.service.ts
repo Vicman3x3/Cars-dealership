@@ -54,7 +54,7 @@ export class CarsService {
         //     throw  new BadRequestException(`el carro con id ${id} no ha sido encontrado o es inválido`)
         // }
         this.cars.map(
-             car => {
+            car => {
                 if(car.id === id){
                     carDB = {
                         ...carDB,
@@ -68,5 +68,10 @@ export class CarsService {
         )
 
         return carDB;
+    }
+
+    delete(id: string){
+        let carDB = this.findOneByID(id)
+        this.cars = this.cars.filter( car => car.id !== id)
     }
 }
